@@ -34,6 +34,8 @@ typedef enum {UP=0x4800,DOWN=0x5000,LEFT=0x4b00,RIGHT=0x4d00,PAGEUP=0x4900,PAGED
 
 scankey d;						/* define keyboard direction ctrl */
 
+int shift_mode = 0;
+
 int n=6;						/* define snake's length(num of nodes is n) */
 #define SPEED_MAX 1000
 #define SPEED_MIN 50
@@ -46,14 +48,13 @@ int main(void)
 {
 	opening();
 	init_run();
-	while(1)
-{
-	dir_select();
-	run();
-	draw();
-	judge();
-	delay((int)((SPEED_MAX - speed) * DELAY_HINT));
-}
+	while(1) {
+      dir_select();
+      run();
+      draw();
+      judge();
+      if (!shift_mode) delay((int)((SPEED_MAX - speed) * DELAY_HINT));
+    }
 	return 0;
 }
 
@@ -149,7 +150,7 @@ void init_run()
 void dir_select(void)
 {
 	int k;
-	if (kbhit()) k=bioskey(0);
+	while (kbhit()) k=bioskey(0);
 	if (k==UP && d != DOWN)
 		d=UP;
 	else if (k==DOWN && d != UP)
@@ -160,6 +161,7 @@ void dir_select(void)
 		d=RIGHT;
 
 	if (k==ESC) exit(32);
+    if ((k & 0xff) == 'a') shift_mode = !shift_mode;
 }
 
 void run(void)
