@@ -21,6 +21,8 @@ void draw(void);
 void judge(void);
 void fod(void);
 void closing(void);
+void update_shift_status(void);
+
 
 typedef struct
 {
@@ -111,6 +113,18 @@ void opening(void)
 
 }
 
+void update_shift_status(void) {
+  if (shift_mode) {
+    setcolor(LIGHTGREEN);
+  } else {
+    setcolor(BLACK);
+  }
+  settextstyle(DEFAULT_FONT,HORIZ_DIR,3);
+  outtextxy(320,448,"//SHIFTING//");
+
+  settextstyle(DEFAULT_FONT,HORIZ_DIR,1);             /*set back to default font*/
+}
+
 void init_run()
 {
 	int i;
@@ -160,8 +174,12 @@ void dir_select(void)
 	else if (k==RIGHT && d != LEFT)
 		d=RIGHT;
 
-	if (k==ESC) exit(32);
-    if ((k & 0xff) == 'a') shift_mode = !shift_mode;
+    if ((k & 0xff) == 'a') {
+      shift_mode = !shift_mode;
+      update_shift_status();
+    }
+
+    if (k==ESC) exit(32);
 }
 
 void run(void)
