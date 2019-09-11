@@ -74,7 +74,7 @@ void opening(void)
 	setcolor(DARKGRAY);
 	rectangle(117,197,522,282);
 	settextstyle(GOTHIC_FONT,HORIZ_DIR,10);
-	setcolor(BLUE);
+	setcolor(LIGHTBLUE);
 	outtextxy(120,160,"SHIFT");    		     /* DEFAULT:120,200*/
 	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,2);
 	setcolor(LIGHTRED);
